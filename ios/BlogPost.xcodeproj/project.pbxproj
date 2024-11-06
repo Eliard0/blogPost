@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* BlogPostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BlogPostTests.m */; };
+		0A23C14EDA11446A8AD56C20 /* NunitoSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3FF79006D2CD4EBB98644219 /* NunitoSans.ttf */; };
 		0C80B921A6F3F58F76C31292 /* libPods-BlogPost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-BlogPost.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-BlogPost-BlogPostTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-BlogPost-BlogPostTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9BE0E7BF75624F8ABD8401C0 /* NunitoSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6BF89B1424CE47BEB5C5BDBA /* NunitoSans-Italic.ttf */; };
+		E6923DE0CC5E46708AB2998B /* Itim-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2B9B0C26F65F4712A9D41950 /* Itim-Regular.ttf */; };
+		F6F2FA8E90726D249BE6BEB4 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,10 +42,13 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = BlogPost/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = BlogPost/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-BlogPost-BlogPostTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BlogPost-BlogPostTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B9B0C26F65F4712A9D41950 /* Itim-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Itim-Regular.ttf"; path = "../src/assets/fonts/Itim-Regular.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-BlogPost.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlogPost.debug.xcconfig"; path = "Target Support Files/Pods-BlogPost/Pods-BlogPost.debug.xcconfig"; sourceTree = "<group>"; };
+		3FF79006D2CD4EBB98644219 /* NunitoSans.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoSans.ttf; path = ../src/assets/fonts/NunitoSans.ttf; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-BlogPost.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlogPost.release.xcconfig"; path = "Target Support Files/Pods-BlogPost/Pods-BlogPost.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-BlogPost-BlogPostTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlogPost-BlogPostTests.debug.xcconfig"; path = "Target Support Files/Pods-BlogPost-BlogPostTests/Pods-BlogPost-BlogPostTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-BlogPost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BlogPost.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BF89B1424CE47BEB5C5BDBA /* NunitoSans-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NunitoSans-Italic.ttf"; path = "../src/assets/fonts/NunitoSans-Italic.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = BlogPost/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-BlogPost-BlogPostTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlogPost-BlogPostTests.release.xcconfig"; path = "Target Support Files/Pods-BlogPost-BlogPostTests/Pods-BlogPost-BlogPostTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -124,6 +131,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				E072AE4C24D94843BDE697F4 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -148,6 +156,17 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-BlogPost-BlogPostTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E072AE4C24D94843BDE697F4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2B9B0C26F65F4712A9D41950 /* Itim-Regular.ttf */,
+				6BF89B1424CE47BEB5C5BDBA /* NunitoSans-Italic.ttf */,
+				3FF79006D2CD4EBB98644219 /* NunitoSans.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,6 +264,10 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				E6923DE0CC5E46708AB2998B /* Itim-Regular.ttf in Resources */,
+				9BE0E7BF75624F8ABD8401C0 /* NunitoSans-Italic.ttf in Resources */,
+				0A23C14EDA11446A8AD56C20 /* NunitoSans.ttf in Resources */,
+				F6F2FA8E90726D249BE6BEB4 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,7 +607,14 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				USE_HERMES = true;
 			};
 			name = Debug;
 		};
@@ -649,7 +679,13 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

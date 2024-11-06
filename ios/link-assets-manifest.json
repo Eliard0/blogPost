@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Itim-Regular.ttf",
+      "sha1": "541b4ee96a4419d10f67fcc001a739a055298e47"
+    },
+    {
+      "path": "src/assets/fonts/NunitoSans-Italic.ttf",
+      "sha1": "caa86e5eee280d876dc54dc331df8ceaa4b9fa6f"
+    },
+    {
+      "path": "src/assets/fonts/NunitoSans.ttf",
+      "sha1": "0bc82dfdb6c913d99eedb88d55e5d61b33ecd210"
+    }
+  ]
+}
