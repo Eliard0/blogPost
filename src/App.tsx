@@ -9,11 +9,13 @@ import LoginScreen from './views/Login';
 import RegisterScreen from './views/Register';
 import Home from './views/Home';
 import Favorite from './views/Favorite';
+import NewPost from './views/NewPost';
 
 export type StackParamList = {
   Login: undefined;
   Register: undefined;
   Home: undefined;
+  NewPost: undefined;
 };
 
 const Stack = createStackNavigator<StackParamList>();
@@ -57,6 +59,8 @@ const App = () => {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Home" component={HomeTabs} />
+
+        <Stack.Screen name="NewPost" component={NewPost} />
       </Stack.Navigator>
     </NavigationContainer>
   );

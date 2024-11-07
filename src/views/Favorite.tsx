@@ -49,6 +49,7 @@ const Favorite = ({ navigation }: Props) => {
                     searchQuery={searchQuery}
                     setSearchVisible={setSearchVisible}
                     setSearchQuery={setSearchQuery}
+                    showIconSearch={true}
                 />
             ),
         });

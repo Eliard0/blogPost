@@ -51,19 +51,22 @@ const ButtonTextHideInputSearch = styled.Text`
 
 type Props = {
     title: String;
-    searchVisible: boolean;
-    searchQuery: string;
-    setSearchVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+    searchVisible?: boolean;
+    searchQuery?: string;
+    setSearchVisible?: React.Dispatch<React.SetStateAction<boolean>>;
+    setSearchQuery?: React.Dispatch<React.SetStateAction<string>>;
+    showIconSearch: boolean
 };
 
 const NavBar: React.FC<Props> = ({
     title,
-    searchVisible,
-    searchQuery,
-    setSearchVisible,
-    setSearchQuery,
+    searchVisible = false,
+    searchQuery = '',
+    setSearchVisible = () => {},
+    setSearchQuery = () => {},
+    showIconSearch = true
 }) => {
+
     return (
         <NavBarContainer>
             {searchVisible ? (
@@ -82,12 +85,14 @@ const NavBar: React.FC<Props> = ({
             ) : (
                 <TitleNavBarContainer>
                     <TitleNavBar>{title}</TitleNavBar>
-                    <Icon
-                        name="search"
-                        size={25}
-                        color="#333"
-                        onPress={() => setSearchVisible(true)}
-                    />
+                    {showIconSearch && (
+                        <Icon
+                            name="search"
+                            size={25}
+                            color="#333"
+                            onPress={() => setSearchVisible(true)}
+                        />
+                    )}
                 </TitleNavBarContainer>
             )}
         </NavBarContainer>
