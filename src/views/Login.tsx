@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackParamList } from '../App';
 
 type LoginScreenNavigationProp = StackNavigationProp<StackParamList, 'Login'>;
@@ -75,14 +76,29 @@ const Login = ({ navigation }: Props) => {
           headerShown: false,
         });
       }, [navigation]);
+
+      useEffect(() => {
+        const checkUserLoggedIn = async () => {
+          try {
+            const user = await AsyncStorage.getItem('user');
+            if (user) {
+              navigation.replace('Home'); // Navega diretamente para a Home se o usuário já estiver logado
+            }
+          } catch (error) {
+            console.log('Erro ao verificar usuário no AsyncStorage:', error);
+          }
+        };
+    
+        checkUserLoggedIn();
+      }, [navigation]);
     return (
       <Container>
         <TitleViewText>LOGIN</TitleViewText>
         <InputContainer>
           <TitleInput>E-mail</TitleInput>
-          <Input placeholder='Endereço de e-mail'></Input>
+          <Input placeholder='Endereço de e-mail' />
           <TitleInput>Senha</TitleInput>
-          <Input placeholder='Senha'></Input>
+          <Input placeholder='Senha' secureTextEntry={true}/>
         </InputContainer>
         <Button>
           <ButtonText>Entrar</ButtonText>

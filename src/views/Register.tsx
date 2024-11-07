@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Alert } from 'react-native';
 import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type RootStackParamList = {
     Register: undefined;
@@ -59,6 +61,9 @@ const ButtonText = styled.Text`
 `;
 
 const Register = ({ navigation }: Props) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerShown: true,
@@ -71,17 +76,46 @@ const Register = ({ navigation }: Props) => {
         });
     }, [navigation]);
 
+const handleRegister = async () => {
+    if (email === '' || password === '') {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos.');
+      return;
+    }
+
+    try {
+      const userData = { email, password };
+
+      await AsyncStorage.setItem('user', JSON.stringify(userData));
+      Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
+      navigation.navigate('Home'); 
+    
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Erro', 'Erro ao tentar cadastrar o usuário.');
+    }
+  };
+
+
     return (
         <Container>
             <InputContainer>
                 <TitleInput>Nome de Usuário</TitleInput>
                 <Input placeholder='Nome de Usuário'></Input>
                 <TitleInput>E-mail</TitleInput>
-                <Input placeholder='Endereço de e-mail'></Input>
+                <Input 
+                    placeholder='Endereço de e-mail'
+                    value={email}
+                    onChangeText={setEmail}
+                />
+
                 <TitleInput>Senha</TitleInput>
-                <Input placeholder='Senha'></Input>
+                <Input 
+                    placeholder='Senha'
+                    value={password}
+                    onChangeText={setPassword}
+                />
             </InputContainer>
-            <Button>
+            <Button onPress={handleRegister}>
                 <ButtonText>Criar conta</ButtonText>
             </Button>
         </Container>
