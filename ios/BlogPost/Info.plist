@@ -49,10 +49,12 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		< key >UIAppFonts</ key >
 		<string>Itim-Regular.ttf</string>
-		<string>NunitoSans-Italic.ttf</string>
 		<string>NunitoSans.ttf</string>
+		<string>NunitoSans-Italic.ttf</string>
+		<string>NunitoSansBold.ttf</string>
+		<string>NunitoSansRegular.ttf</string>
+		<string>Itim-Regular.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
@@ -72,6 +74,7 @@
 		<string>Octicons.ttf</string>
 		<string>Zocial.ttf</string>
 		<string>Fontisto.ttf</string>
+		<string>Feather.ttf</string>
 	</array>
 </dict>
 </plist>
