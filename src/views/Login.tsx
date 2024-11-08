@@ -82,7 +82,7 @@ const Login = ({ navigation }: Props) => {
           try {
             const user = await AsyncStorage.getItem('user');
             if (user) {
-              navigation.replace('Home'); // Navega diretamente para a Home se o usuário já estiver logado
+              navigation.replace('Home');
             }
           } catch (error) {
             console.log('Erro ao verificar usuário no AsyncStorage:', error);

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 
 import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { StackParamList } from '../App';
 import { useNavigation } from '@react-navigation/native';
 
-import { StackParamList } from '../App';
 import NavBar from '../components/NavBar';
 import IconPlus from 'react-native-vector-icons/FontAwesome';
-import { FlatList, ListRenderItemInfo } from 'react-native';
+import { FlatList, ListRenderItemInfo, TouchableOpacity } from 'react-native';
+import { useFavorites } from './ContextApi';
+import PostCard from '../components/PostCard';
 
 type HomeScreenNavigationProp = StackNavigationProp<StackParamList, 'Home'>;
 
@@ -34,50 +36,12 @@ const ButtonNewPost = styled.TouchableOpacity`
   right: 20px;
 `;
 
-const Card = styled.View`
-  width: 97%;
-  background-color: #f9f9f9;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 10px;
-  shadow-color: #000;
-  shadow-opacity: 0.1;
-  shadow-radius: 5px;
-  elevation: 3;
-`;
-
-const InfoProfileContainer = styled.View`
-  flex-direction: row;
-`;
-
-const InfoPersonContainer = styled.View`
-  flex-direction: column;
-`;
-
-const ProfileImage = styled.Image`
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-  margin-right: 15px;
-`;
-
-const Name = styled.Text`
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-`;
-
 const Title = styled.Text`
 font-family: 'NunitoSansBold';
 font-size: 18px;
 font-weight: bold;
 color: #333;
 margin-bottom: 8px;
-`;
-
-const Body = styled.Text`
-  font-size: 16px;
-  color: #666;
 `;
 
 type Post = {
@@ -91,15 +55,9 @@ const Home = ({ navigation }: Props) => {
     const [searchVisible, setSearchVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [posts, setPosts] = useState<Post[]>([]);
-    const [starredItems, setStarredItems] = useState<{ [key: number]: boolean }>({});
     const [loading, setLoading] = useState<boolean>(true);
 
-    const handleStarPress = (id: number) => {
-        setStarredItems((prev) => ({
-            ...prev,
-            [id]: !prev[id],
-        }));
-    };
+    const { favorites, toggleFavorite } = useFavorites();
 
     React.useLayoutEffect(() => {
         navBar.setOptions({
@@ -139,36 +97,24 @@ const Home = ({ navigation }: Props) => {
         fetchPosts();
     }, []);
 
+    const handleStarPress = (item: Post) => {
+        toggleFavorite(item);
+    };
+
+
     if (loading) {
         return <Container><Title>Carregando...</Title></Container>;
     }
 
     const renderItem = ({ item }: ListRenderItemInfo<Post>) => {
-        const profileImageUrl = `https://ui-avatars.com/api/?name=nemo+tody`;
-        const isStarred = starredItems[item.id] || false
+        const isStarred = favorites.some((fav) => fav.id == item.id);
 
         return (
-            <Card key={item.id}>
-                <InfoProfileContainer>
-                    <ProfileImage source={{ uri: profileImageUrl }} />
-                    <InfoPersonContainer>
-                        <Name>Nemo</Name>
-                        <Name>@NemoTody</Name>
-                    </InfoPersonContainer>
-                    <IconPlus
-                        name={isStarred ? "star" : "star-o"}
-                        size={27}
-                        color={isStarred ? "#FFD700" : "#000"}
-                        style={{
-                            position: 'absolute',
-                            right: 5,
-                        }}
-                        onPress={() => handleStarPress(item.id)}
-                    />
-                </InfoProfileContainer>
-                <Title>{item.title}</Title>
-                <Body>{item.body}</Body>
-            </Card>
+            <PostCard
+                item={item}
+                isStarred={isStarred}
+                onStarPress={() => handleStarPress(item)}
+            />
         );
     };
 

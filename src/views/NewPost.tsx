@@ -81,6 +81,7 @@ const NewPost = ({ navigation }: Props) => {
         navBar.setOptions({
             headerShown: true,
             title: null,
+            headerTitleAlign: 'left',
             headerStyle: {
                 borderBottomWidth: 0.2,
                 shadowOpacity: 0,
@@ -89,7 +90,7 @@ const NewPost = ({ navigation }: Props) => {
             headerLeft: () => (
                 <Icon
                     name="x"
-                    size={25}
+                    size={20}
                     color="#333"
                     onPress={handleCloseSearch}
                     style={{ marginLeft: 20 }}

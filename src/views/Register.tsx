@@ -3,12 +3,10 @@ import { Alert } from 'react-native';
 import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { StackParamList } from '../App';
 
-type RootStackParamList = {
-    Register: undefined;
-};
-
-type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>;
+type RegisterScreenNavigationProp = StackNavigationProp<StackParamList, 'Register'>;
 
 interface Props {
     navigation: RegisterScreenNavigationProp;
@@ -60,14 +58,29 @@ const ButtonText = styled.Text`
   color: #fff;
 `;
 
+
 const Register = ({ navigation }: Props) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  
+  const handleCloseSearch = () => {
+    navigation.goBack();
+  };
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerShown: true,
             title: 'Criar nova conta',
+            headerTitleAlign: 'left',
+            headerLeft: () => (
+              <Icon
+                  name="arrowleft"
+                  size={20}
+                  color="#333"
+                  onPress={handleCloseSearch}
+                  style={{ marginLeft: 20, marginRight: 10 }}
+              />
+          ),
             headerStyle: {
                 borderBottomWidth: 0.2,
                 shadowOpacity: 0,

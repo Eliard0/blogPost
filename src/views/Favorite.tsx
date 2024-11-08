@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
-
 import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
 import { StackParamList } from '../App';
 import NavBar from '../components/NavBar';
+import { useFavorites } from './ContextApi';
+import { FlatList, ListRenderItemInfo } from 'react-native';
+import PostCard from '../components/PostCard';
 
-type HomeScreenNavigationProp = StackNavigationProp<StackParamList, 'Home'>;
+type FavoriteScreenNavigationProp = StackNavigationProp<StackParamList, 'Favorite'>;
 
 type Props = {
-    navigation: HomeScreenNavigationProp;
+    navigation: FavoriteScreenNavigationProp;
+};
+
+type Post = {
+    id: number;
+    title: string;
+    body: string;
 };
 
 const Container = styled.View`
@@ -19,19 +27,19 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const TitleViewText = styled.Text`
+const Title = styled.Text`
   font-family: 'NunitoSansBold';
-  font-size: 32px;
-  font-weight: 700;
-  color: #000;
+  font-size: 18px;
+  color: #333;
   margin-top: 20%;
-  margin-bottom: 10%;
 `;
 
 const Favorite = ({ navigation }: Props) => {
     const navBar = useNavigation();
     const [searchVisible, setSearchVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const { favorites, toggleFavorite } = useFavorites();
+
 
     React.useLayoutEffect(() => {
         navBar.setOptions({
@@ -53,11 +61,33 @@ const Favorite = ({ navigation }: Props) => {
                 />
             ),
         });
-    }, [navigation, searchVisible, searchQuery]);
+    }, [navBar, searchVisible, searchQuery]);
+
+    const handleStarPress = (item: Post) => {
+        toggleFavorite(item);
+      };
+
+    const renderItem = ({ item }: ListRenderItemInfo<Post>) => {
+        return (
+          <PostCard
+            item={item}
+            isStarred={true}
+            onStarPress={()=>handleStarPress(item)}
+          />
+        );
+      };
 
     return (
         <Container>
-            <TitleViewText>favoritos</TitleViewText>
+            {favorites.length > 0 ? (
+                <FlatList
+                    data={favorites}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={renderItem}
+                />
+            ) : (
+                <Title>Nenhum Post favorito adicionado</Title>
+            )}
         </Container>
     );
 };
