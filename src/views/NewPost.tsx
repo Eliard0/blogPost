@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackParamList } from '../App';
 import NavBar from '../components/NavBar';
 import Icon from 'react-native-vector-icons/Feather';
+import { Alert } from 'react-native';
 
 type NewPostScreenNavigationProp = StackNavigationProp<StackParamList, 'NewPost'>;
 
@@ -32,6 +33,7 @@ const Input = styled.TextInput`
   border-radius: 8px;
   margin-bottom: 20px;
   background-color: #EFF1F5;
+  color: #000;
 `;
 
 const TitleInput = styled.Text`
@@ -43,13 +45,16 @@ const TitleInput = styled.Text`
 `;
 
 const InputTexto = styled.TextInput`
-  height: 60%;
+ width: 100%;
+ height: 60%;
   font-size: 16px;
+  padding: 16px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  margin-bottom: 20px;
   background-color: #EFF1F5;
-  text-align-vertical: top; 
+  color: #000;
+  text-align-vertical: top;
+  text-align: left;
 `;
 
 const ButtonCreateNewPost = styled.TouchableOpacity`
@@ -72,6 +77,8 @@ const ButtonText = styled.Text`
 
 const NewPost = ({ navigation }: Props) => {
     const navBar = useNavigation();
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
 
     const handleCloseSearch = () => {
         navigation.goBack();
@@ -105,23 +112,58 @@ const NewPost = ({ navigation }: Props) => {
         });
     }, [navigation]);
 
+    const handlePostSubmit = () => {
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            body: JSON.stringify({
+                title: title,
+                body: body,
+                userId: 1,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            console.log(json);
+            Alert.alert('Sucesso', 'Post criado com sucesso')
+            navigation.goBack();
+        })
+        .catch((error) => {
+            Alert.alert('Error', 'Algo de errado não deu certo')
+            console.error('Error posting data:', error);
+        });
+    };
+
     return (
         <Container>
             <InputContainer>
                 <TitleInput>Título da publicação</TitleInput>
-                <Input placeholder='Adicione um título' />
+                <Input
+                    placeholder='Adicione um título'
+                    placeholderTextColor={"#A9AEB7"}
+                    value={title}
+                    onChangeText={setTitle}
+                />
                 <TitleInput>Texto da publicação</TitleInput>
-                <InputTexto placeholder='O que gostaria de compartilhar?' />
+                <InputTexto
+                    placeholder='O que gostaria de compartilhar?'
+                    multiline
+                    placeholderTextColor={"#A9AEB7"}
+                    value={body}
+                    onChangeText={setBody}
+                />
             </InputContainer>
 
-            <ButtonCreateNewPost>
+            <ButtonCreateNewPost onPress={handlePostSubmit}>
                 <Icon
                     name="send"
                     size={15}
                     color="#fff"
                     style={{ marginRight: 10 }}
                 />
-                 <ButtonText>
+                <ButtonText>
                     Publicar
                 </ButtonText>
             </ButtonCreateNewPost>
