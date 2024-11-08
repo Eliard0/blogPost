@@ -4,7 +4,7 @@ import IconPlus from 'react-native-vector-icons/FontAwesome';
 import IconComent from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { StackParamList } from '../App';
-import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Keyboard, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useFavorites } from './ContextApi';
@@ -69,7 +69,7 @@ const InfoBody = styled.Text`
     color: #000;
 `;
 
-const ContainerComents = styled.View`
+const ContainerTitleComents = styled.View`
     margin-top: 20px;
     border-color: #5E6064;
     padding-top: 10px;
@@ -78,7 +78,7 @@ const ContainerComents = styled.View`
     border-width: 0.3px;
 `;
 
-const TextComents = styled.Text`
+const TitleComents = styled.Text`
     font-size: 20px;
     font-weight: 600;
     color: #000;
@@ -86,7 +86,7 @@ const TextComents = styled.Text`
 
 const ContainerComentUser = styled.View`
     width: 100%;
-    height: 10%;
+    height: 50px;
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -100,13 +100,47 @@ const IconContainer = styled.View`
     z-index: 2;
 `;
 
-const ComentUser = styled.TextInput`
-    width: 90%;
+const ContainerProfileComent = styled.View`
+flex-direction: row;
+margin-top: 10px;
+margin-left: 10px;
+padding-left: 16px;
+`;
+
+const ProfileImageComent = styled.Image`
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
+  margin-right: 10px;
+`;
+
+const ContaineeInfoProfileComent = styled.View`
+  flex-direction: column;
+  padding-top: 3px;
+`;
+
+const TextComent = styled.Text`
+font-size: 16px;
+    color: #000;
+`;
+
+const ComentUser = styled.TextInput<{ keyboardActive: boolean }>`
+    width: ${(props) => (props.keyboardActive ? '80%' : '90%')};
     height: 100%;
     background-color: #EFF1F5;
     border-radius: 8px;
-    padding-left: 40px;
+    padding-left: ${(props) => (props.keyboardActive ? '5%' : '12%')};
     z-index: 1;
+`;
+
+const SendButton = styled.TouchableOpacity`
+  background-color: #0F90D9;
+  width: 50px;
+  height: 50px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
 `;
 
 type DetailPostScreenRouteProp = RouteProp<StackParamList, 'DetailPost'>;
@@ -124,10 +158,13 @@ type Post = {
 const DetailPost = ({ route }: Props) => {
     const navigation = useNavigation();
     const { favorites, toggleFavorite } = useFavorites();
-    const [posts, setPosts] = useState<Post[]>([]);
     const { userId, userName, profileImageUrl, title, body } = route.params;
-    const isStarred = favorites.some((fav) => fav.id == userId);
+    const [isStarred, setIsStarred] = useState(favorites.some((fav) => fav.id === userId));
 
+
+    const [commentText, setCommentText] = useState('');
+    const [comments, setComments] = useState<string[]>([]);
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
@@ -151,20 +188,43 @@ const DetailPost = ({ route }: Props) => {
         });
     }, [navigation]);
 
-    const handleCloseSearch = () => {
-        navigation.goBack();
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
+        console.log(isKeyboardVisible)
+        return () => {
+            keyboardDidHideListener.remove();
+            keyboardDidShowListener.remove();
+        };
+    }, [isKeyboardVisible]);
+
+    const handleAddComment = () => {
+        if (commentText.trim().length > 0) {
+            setComments((prevComments) => {
+                const updatedComments = [...prevComments, commentText];
+                console.log("Comentários atualizados:", updatedComments);
+                return updatedComments;
+            });
+            setCommentText('');
+        } else {
+            console.log("Comentário vazio, não adicionado.");
+        }
     };
 
-    const handleStarPress = (item: Post) => {
-        toggleFavorite(item);
+    useEffect(() => {
+        setIsStarred(favorites.some((fav) => fav.id === userId));
+      }, [favorites]);
+
+    const handleCloseSearch = () => {
+        navigation.goBack();
     };
 
     return (
         <SafeArea>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-                keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 20}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 10}
             >
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <Container>
@@ -184,27 +244,54 @@ const DetailPost = ({ route }: Props) => {
                                 top: 15,
                                 right: 20,
                             }}
-                        // onPress={}
                         />
                         <ContainerInfo>
                             <InfoTile>{title}</InfoTile>
                             <InfoBody>{body}</InfoBody>
                         </ContainerInfo>
 
-                        <ContainerComents>
-                            <TextComents>Comentários</TextComents>
-                        </ContainerComents>
+                        <ContainerTitleComents>
+                            <TitleComents>Comentários</TitleComents>
+                        </ContainerTitleComents>
+
+                        {comments.map((comment, index) => (
+                            <ContainerProfileComent>
+                                <ProfileImageComent source={{ uri: String(profileImageUrl) }} />
+                                <ContaineeInfoProfileComent>
+                                    <NameUser>{userName}</NameUser>
+                                    <TextComent key={index}>{comment}</TextComent>
+                                </ContaineeInfoProfileComent>
+                            </ContainerProfileComent>
+                        ))}
 
                         <ContainerComentUser>
                             <IconContainer>
-                                <IconComent
-                                    name="comment-text-outline"
-                                    size={20}
-                                    color="#333"
-                                />
+                                {!isKeyboardVisible && (
+                                    <IconComent
+                                        name="comment-text-outline"
+                                        size={20}
+                                        color="#333"
+                                    />
+                                )}
                             </IconContainer>
-                            <ComentUser placeholder='Adicione um comentário' placeholderTextColor={"#000"}>
+                            <ComentUser
+                                placeholder='Adicione um comentário'
+                                placeholderTextColor={"#000"}
+                                keyboardActive={isKeyboardVisible}
+                                value={commentText}
+                                onChangeText={(text) => setCommentText(text)}
+                                onSubmitEditing={handleAddComment}
+                            >
                             </ComentUser>
+                            {isKeyboardVisible && (
+                                <SendButton onPress={() => { handleAddComment(); console.log("chma") }}>
+                                    <Icon
+                                        name="arrowright"
+                                        size={15}
+                                        color="#fff"
+                                    />
+                                </SendButton>
+                            )}
                         </ContainerComentUser>
                     </Container>
                 </ScrollView>
