@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import NavBar from '../components/NavBar';
 import IconPlus from 'react-native-vector-icons/FontAwesome';
-import { FlatList, ListRenderItemInfo, TouchableOpacity } from 'react-native';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 import { useFavorites } from './ContextApi';
 import PostCard from '../components/PostCard';
 
@@ -55,6 +55,7 @@ const Home = ({ navigation }: Props) => {
     const [searchVisible, setSearchVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [posts, setPosts] = useState<Post[]>([]);
+    const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     const { favorites, toggleFavorite } = useFavorites();
@@ -87,6 +88,7 @@ const Home = ({ navigation }: Props) => {
                 const response = await fetch('https://jsonplaceholder.typicode.com/posts');
                 const data: Post[] = await response.json();
                 setPosts(data);
+                setFilteredPosts(data);
             } catch (error) {
                 console.error('Erro ao buscar as publicações:', error);
             } finally {
@@ -101,6 +103,16 @@ const Home = ({ navigation }: Props) => {
         toggleFavorite(item);
     };
 
+    useEffect(() => {
+        const filterPosts = () => {
+          const filtered = posts.filter(post =>
+            post.title.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+          setFilteredPosts(filtered);
+        };
+    
+        filterPosts();
+      }, [searchQuery, posts]);
 
     if (loading) {
         return <Container><Title>Carregando...</Title></Container>;
@@ -121,7 +133,7 @@ const Home = ({ navigation }: Props) => {
     return (
         <Container>
             <FlatList
-                data={posts}
+                data={filteredPosts}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id.toString()}
             />

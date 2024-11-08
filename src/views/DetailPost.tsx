@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useId } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/native';
 import IconPlus from 'react-native-vector-icons/FontAwesome';
 import IconComent from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { StackParamList } from '../App';
-import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Keyboard, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useFavorites } from './ContextApi';

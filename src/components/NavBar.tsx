@@ -37,7 +37,6 @@ const SearchInput = styled.TextInput`
 
 const ButtonHideInputSearch = styled.TouchableOpacity`
   width: 20%;
-  border-radius: 40px;
   justify-content: center;
   align-items: center;
   margin-left: 8px;
@@ -45,7 +44,7 @@ const ButtonHideInputSearch = styled.TouchableOpacity`
 
 const ButtonTextHideInputSearch = styled.Text`
   font-family: 'NunitoSansBold';
-  font-size: 18px;
+  font-size: 17px;
   color: #0F90D9;
 `;
 

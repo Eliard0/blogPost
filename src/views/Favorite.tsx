@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
@@ -38,8 +38,8 @@ const Favorite = ({ navigation }: Props) => {
     const navBar = useNavigation();
     const [searchVisible, setSearchVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const { favorites, toggleFavorite } = useFavorites();
-
+    const {favorites, toggleFavorite } = useFavorites();
+    const [filteredFavorites, setFilteredFavorites] = useState<Post[]>(favorites);
 
     React.useLayoutEffect(() => {
         navBar.setOptions({
@@ -67,6 +67,17 @@ const Favorite = ({ navigation }: Props) => {
         toggleFavorite(item);
       };
 
+      useEffect(() => {
+        const filterFavorites = () => {
+            const filtered = favorites.filter(post =>
+                post.title.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            setFilteredFavorites(filtered);
+        };
+
+        filterFavorites();
+    }, [searchQuery, favorites]);
+
     const renderItem = ({ item }: ListRenderItemInfo<Post>) => {
         return (
           <PostCard
@@ -81,7 +92,7 @@ const Favorite = ({ navigation }: Props) => {
         <Container>
             {favorites.length > 0 ? (
                 <FlatList
-                    data={favorites}
+                    data={filteredFavorites}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={renderItem}
                 />
