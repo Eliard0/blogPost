@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/AntDesign';
 import useNewPostViewModel from '../ViewModel/NewPostViewModel';
 import { useNavigation } from '@react-navigation/native';
 
@@ -67,6 +67,28 @@ const ButtonText = styled.Text`
 const NewPost = () => {
     const { title, setTitle, body, setBody, handlePostSubmit } = useNewPostViewModel();
     const navigation = useNavigation()
+
+    React.useLayoutEffect(() => {
+      navigation.setOptions({
+          headerShown: true,
+          title: 'Nova publicação',
+          headerTitleAlign: 'left',
+          headerLeft: () => (
+            <Icon
+                name="close"
+                size={20}
+                color="#333"
+                onPress={()=> navigation.goBack()}
+                style={{ marginLeft: 20, marginRight: 10 }}
+            />
+        ),
+          headerStyle: {
+              borderBottomWidth: 0.2,
+              shadowOpacity: 0,
+              elevation: 0,
+          },
+      });
+  }, [navigation]);
 
     const handleCreatePost = async () => {
         const success = await handlePostSubmit();
