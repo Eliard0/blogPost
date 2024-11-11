@@ -1,6 +1,6 @@
 # Projeto React Native
 
-Este é um projeto desenvolvido com React Native. A aplicação tem como objetivo oferecer [insira o objetivo do projeto aqui].
+Este é um projeto desenvolvido com React Native CLI.
 
 ## Tecnologias Usadas
 
