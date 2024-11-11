@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Feather';
-import { FavoritesProvider } from './views/ContextApi';
+import { FavoritesProvider } from './context/ContextApi';
 
 import LoginScreen from './views/Login';
 import RegisterScreen from './views/Register';
@@ -20,8 +20,8 @@ export type StackParamList = {
   Home: undefined;
   NewPost: undefined;
   Favorite: undefined;
-  Profile: { userId: number, userName: String, profileImageUrl: String };
-  DetailPost: { userId: number, userName: String, profileImageUrl: String, title: String, body: String }
+  Profile: { userId: number, userName: string, profileImageUrl: string };
+  DetailPost: { userId: number, userName: string, profileImageUrl: string, title: string, body: string }
 };
 
 const Stack = createStackNavigator<StackParamList>();

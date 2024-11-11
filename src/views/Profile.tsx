@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { StackParamList } from '../App';
-import { FlatList, ListRenderItemInfo, SafeAreaView } from 'react-native';
+import { FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconLocation from 'react-native-vector-icons/EvilIcons';
 import IconCall from 'react-native-vector-icons/Ionicons';
 import IconCase from 'react-native-vector-icons/SimpleLineIcons';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import { useFavorites } from './ContextApi';
 import PostCard from '../components/PostCard';
+import { useProfileViewModel } from '../ViewModel/ProfileViewModel';
+import { Post } from '../models/Post';
 
-const SafeArea = styled(SafeAreaView)`
+const SafeArea = styled.SafeAreaView`
   flex: 1;
   background-color: #EFF1F5;
   `;
@@ -65,17 +65,10 @@ type Props = {
   route: ProfileScreenRouteProp;
 };
 
-type Post = {
-    id: number;
-    title: string;
-    body: string;
-};
-
 const Profile = ({ route }: Props) => {
     const navigation = useNavigation();
-    const { favorites, toggleFavorite } = useFavorites();
-    const [posts, setPosts] = useState<Post[]>([]);
     const { userId, userName, profileImageUrl } = route.params;
+    const { posts, handleStarPress, isFavorite } = useProfileViewModel(userId);
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
@@ -92,47 +85,20 @@ const Profile = ({ route }: Props) => {
                     name="arrowleft"
                     size={20}
                     color="#333"
-                    onPress={handleCloseSearch}
+                    onPress={() => navigation.goBack()}
                     style={{ marginLeft: 20, marginRight: 10 }}
                 />
-            )
+            ),
         });
     }, [navigation]);
 
-    const handleCloseSearch = () => {
-        navigation.goBack();
-    };
-
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-                const data: Post[] = await response.json();
-                setPosts(data);
-            } catch (error) {
-                console.error('Erro ao buscar as publicações:', error);
-            } finally {
-            }
-        };
-
-        fetchPosts();
-    }, []);
-
-    const handleStarPress = (item: Post) => {
-        toggleFavorite(item);
-    };
-
-    const renderItem = ({ item }: ListRenderItemInfo<Post>) => {
-        const isStarred = favorites.some((fav) => fav.id == item.id);
-
-        return (
-            <PostCard
-                item={item}
-                isStarred={isStarred}
-                onStarPress={() => handleStarPress(item)}
-            />
-        );
-    };
+    const renderItem = ({ item }: { item: Post }) => (
+        <PostCard
+            item={item}
+            isStarred={isFavorite(item.id)}
+            onStarPress={() => handleStarPress(item)}
+        />
+    );
 
     return (
         <SafeArea>
@@ -144,7 +110,6 @@ const Profile = ({ route }: Props) => {
                         <User>@userName</User>
                     </ContaineeInfoProfile>
                 </ContainerProfile>
-
                 <ContaineeInfoProfile>
                     <ContainerProfile>
                         <Icon
@@ -191,7 +156,7 @@ const Profile = ({ route }: Props) => {
                 keyExtractor={(item) => item.id.toString()}
             />
         </SafeArea>
-    )
-}
+    );
+};
 
-export default Profile
+export default Profile;

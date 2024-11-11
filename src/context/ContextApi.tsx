@@ -19,8 +19,8 @@ const FavoritesProvider = ({ children }: { children: ReactNode }) => {
 
   const toggleFavorite = (item: Post) => {
     setFavorites((prevFavorites) => {
-      if (prevFavorites.some((fav) => fav.id === item.id)) {
-        return prevFavorites.filter((fav) => fav.id !== item.id);
+      if (prevFavorites.some((fav) => fav.id == item.id)) {
+        return prevFavorites.filter((fav) => fav.id != item.id);
       } else {
         return [...prevFavorites, item];
       }

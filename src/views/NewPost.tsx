@@ -1,21 +1,10 @@
-import React, { useState } from 'react';
-
+import React from 'react';
 import styled from 'styled-components/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import Icon from 'react-native-vector-icons/Feather';
+import useNewPostViewModel from '../ViewModel/NewPostViewModel';
 import { useNavigation } from '@react-navigation/native';
 
-import { StackParamList } from '../App';
-import NavBar from '../components/NavBar';
-import Icon from 'react-native-vector-icons/Feather';
-import { Alert } from 'react-native';
-
-type NewPostScreenNavigationProp = StackNavigationProp<StackParamList, 'NewPost'>;
-
-type Props = {
-    navigation: NewPostScreenNavigationProp;
-};
-
-const Container = styled.View`
+const Container = styled.SafeAreaView`
   flex: 1;
   background-color: #FFFFFF;
   align-items: center;
@@ -45,8 +34,8 @@ const TitleInput = styled.Text`
 `;
 
 const InputTexto = styled.TextInput`
- width: 100%;
- height: 60%;
+  width: 100%;
+  height: 60%;
   font-size: 16px;
   padding: 16px;
   border: 1px solid #ccc;
@@ -75,65 +64,15 @@ const ButtonText = styled.Text`
   color: #fff;
 `;
 
-const NewPost = ({ navigation }: Props) => {
-    const navBar = useNavigation();
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
+const NewPost = () => {
+    const { title, setTitle, body, setBody, handlePostSubmit } = useNewPostViewModel();
+    const navigation = useNavigation()
 
-    const handleCloseSearch = () => {
-        navigation.goBack();
-    };
-
-    React.useLayoutEffect(() => {
-        navBar.setOptions({
-            headerShown: true,
-            title: null,
-            headerTitleAlign: 'left',
-            headerStyle: {
-                borderBottomWidth: 0.2,
-                shadowOpacity: 0,
-                elevation: 0,
-            },
-            headerLeft: () => (
-                <Icon
-                    name="x"
-                    size={20}
-                    color="#333"
-                    onPress={handleCloseSearch}
-                    style={{ marginLeft: 20 }}
-                />
-            ),
-            headerTitle: () => (
-                <NavBar
-                    title={"Nova Publicação"}
-                    showIconSearch={false}
-                />
-            ),
-        });
-    }, [navigation]);
-
-    const handlePostSubmit = () => {
-        fetch('https://jsonplaceholder.typicode.com/posts', {
-            method: 'POST',
-            body: JSON.stringify({
-                title: title,
-                body: body,
-                userId: 1,
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-        })
-        .then((response) => response.json())
-        .then((json) => {
-            console.log(json);
-            Alert.alert('Sucesso', 'Post criado com sucesso')
+    const handleCreatePost = async () => {
+        const success = await handlePostSubmit();
+        if (success) {
             navigation.goBack();
-        })
-        .catch((error) => {
-            Alert.alert('Error', 'Algo de errado não deu certo')
-            console.error('Error posting data:', error);
-        });
+        }
     };
 
     return (
@@ -141,31 +80,24 @@ const NewPost = ({ navigation }: Props) => {
             <InputContainer>
                 <TitleInput>Título da publicação</TitleInput>
                 <Input
-                    placeholder='Adicione um título'
-                    placeholderTextColor={"#A9AEB7"}
+                    placeholder="Adicione um título"
+                    placeholderTextColor="#A9AEB7"
                     value={title}
                     onChangeText={setTitle}
                 />
                 <TitleInput>Texto da publicação</TitleInput>
                 <InputTexto
-                    placeholder='O que gostaria de compartilhar?'
+                    placeholder="O que gostaria de compartilhar?"
                     multiline
-                    placeholderTextColor={"#A9AEB7"}
+                    placeholderTextColor="#A9AEB7"
                     value={body}
                     onChangeText={setBody}
                 />
             </InputContainer>
 
-            <ButtonCreateNewPost onPress={handlePostSubmit}>
-                <Icon
-                    name="send"
-                    size={15}
-                    color="#fff"
-                    style={{ marginRight: 10 }}
-                />
-                <ButtonText>
-                    Publicar
-                </ButtonText>
+            <ButtonCreateNewPost onPress={handleCreatePost}>
+                <Icon name="send" size={15} color="#fff" style={{ marginRight: 10 }} />
+                <ButtonText>Publicar</ButtonText>
             </ButtonCreateNewPost>
         </Container>
     );
