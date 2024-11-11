@@ -105,7 +105,6 @@ const Profile = ({ route }: Props) => {
             <Container>
                 <ContainerProfile>
                     <ProfileImage 
-                        testID="profile-image"
                         source={{ uri: String(profileImageUrl) }}
                      />
                     <ContaineeInfoProfile>
