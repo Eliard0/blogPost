@@ -81,12 +81,11 @@ const HomeScreen = () => {
                     keyExtractor={(item) => item.id.toString()}
                 />
             )}
-            <ButtonNewPost>
+            <ButtonNewPost onPress={() => navigation.navigate('NewPost')}>
                 <IconPlus
                     name="plus"
                     size={27}
                     color="#fff"
-                    onPress={() => navigation.navigate('NewPost')}
                 />
             </ButtonNewPost>
         </Container>

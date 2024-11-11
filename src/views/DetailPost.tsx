@@ -160,13 +160,14 @@ const DetailPost = ({ route }: { route: RouteProp<StackParamList, 'DetailPost'> 
     navigation.setOptions({
       headerShown: true,
       title: 'Publicação',
+      headerTitleAlign: 'left',
       headerLeft: () => (
         <Icon
           name="arrowleft"
           size={20}
           color="#333"
           onPress={() => navigation.goBack()}
-          style={{ marginLeft: 20, marginRight: 10 }}
+          style={{ marginLeft: 20, marginRight:10 }}
         />
       ),
     });
