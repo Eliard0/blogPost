@@ -104,7 +104,10 @@ const Profile = ({ route }: Props) => {
         <SafeArea>
             <Container>
                 <ContainerProfile>
-                    <ProfileImage source={{ uri: String(profileImageUrl) }} />
+                    <ProfileImage 
+                        testID="profile-image"
+                        source={{ uri: String(profileImageUrl) }}
+                     />
                     <ContaineeInfoProfile>
                         <NameUser>{userName}</NameUser>
                         <User>@userName</User>
